@@ -20,11 +20,14 @@ public:
                 else
                 {
                     cnt=1;
+                   
                 }
             }
+            longest=max(cnt,longest);
            
-            longest=max(longest,cnt);
+            
         }
+       
         return longest;
     }
 };
