@@ -8,33 +8,65 @@ using namespace std;
 // } Driver Code Ends
 /*You are required to complete this function*/
 
-class Solution{
-    public:
-    int maxLen(vector<int>&A, int n)
-    {   unordered_map<int,int>mp;
-      int sum=0;
-      int max1=0;
-      for(int i=0;i<A.size();i++)
-      { 
-        sum+=A[i];
-        if(sum==0)
-        {
-            max1=max(max1,i+1);
+// class Solution{
+//     public:
+//     int maxLen(vector<int>&A, int n)
+//     {   
+//         vector<long long >prefixsum(n+1,0);
+//         prefixsum[0]=0;
+//         for(int i=1;i<=n;i++)
+//         {
+//             prefixsum[i]= prefixsum[i-1]+ A[i-1];
+//         }
+//         unordered_map<int,int >mp;
+//         int larg=0;
+//         for(int i=1;i<=n;i++)
+//         {
+//             if(mp.find(prefixsum[i]) == mp.end())
+//             {
+//                 mp[prefixsum[i]]=i;
+//             }
+//             else
+//             {
+//                 int d=0;
+//                 d=i-mp[prefixsum[i]];
+//                 larg=max(d,larg);
+//             }
+//         }
+//         return larg;
+//     }
+// };
+class Solution {
+public:
+    int maxLen(vector<int>& A, int n) {   
+        vector<long long> prefixsum(n + 1, 0);
+        prefixsum[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            prefixsum[i] = prefixsum[i - 1] + A[i - 1];
         }
-        else if(mp.find(sum)!=mp.end())
+        if(prefixsum[n]==0)
         {
-            int d= i-mp[sum];
-            max1=max(max1,d);
+            return n;
         }
-        else
+        unordered_map<long long, int> mp;
+        int larg = 0;
+        for (int i = 1; i <= n; i++) {
+            
+             if(prefixsum[i]==0)
         {
-            mp[sum]=i;;
+            larg=max(larg,i);
         }
-        
-      }
-        return max1;
+            if (mp.find(prefixsum[i]) != mp.end()) {
+                int d = i - mp[prefixsum[i]];
+                larg = max(d, larg);
+            } else {
+                mp[prefixsum[i]] = i;
+            }
+        }
+        return larg;
     }
 };
+
 
 
 //{ Driver Code Starts.
